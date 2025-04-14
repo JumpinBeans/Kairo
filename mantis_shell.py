@@ -1,6 +1,7 @@
 import requests
 import os
 import subprocess
+import hashlib
 
 # === MEMORY CONFIG ===
 MEMORY_FILE = "C:/Kairo/memory/conversation.log"
@@ -37,16 +38,28 @@ def load_memory():
     return f"{core}\n\n{convo}"
 
 # === SAVE & SYNC MEMORY ===
+def hash_file(path):
+    if not os.path.exists(path): return None
+    with open(path, 'rb') as f:
+        return hashlib.md5(f.read()).hexdigest()
+
 def save_to_memory(user_input, response):
+    old_hash = hash_file(MEMORY_FILE)
+
     with open(MEMORY_FILE, 'a', encoding='utf-8') as f:
         f.write(f"\nUser: {user_input}\nMantis: {response.strip()}\n")
 
-    try:
-        subprocess.run(["git", "add", "."], cwd="C:/Kairo")
-        subprocess.run(["git", "commit", "-m", "Update memory"], cwd="C:/Kairo")
-        subprocess.run(["git", "push", "origin", "main"], cwd="C:/Kairo")
-    except Exception as e:
-        print("⚠️ Git sync failed:", e)
+    new_hash = hash_file(MEMORY_FILE)
+
+    if old_hash != new_hash:
+        try:
+            subprocess.run(["git", "add", "."], cwd="C:/Kairo")
+            subprocess.run(["git", "commit", "-m", "Auto memory sync"], cwd="C:/Kairo")
+            subprocess.run(["git", "push", "origin", "main"], cwd="C:/Kairo")
+            print("🌐 Mantis: Memory synced to GitHub.")
+        except Exception as e:
+            print("⚠️ Git sync failed:", e)
+
 
 # === SPEAK VIA PIPER ===
 def speak(text):
