@@ -2,6 +2,12 @@
 __pycache__/
 *.py[cod]
 *$py.class
+/state/
+/logs/
+/build/
+/config/secrets/
+*.pyc
+__pycache__/
 
 # C extensions
 *.so
