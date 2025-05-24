@@ -103,7 +103,8 @@ Developed by McJebus (Troy Žužić) as part of the SoulWare project — a lifel
 
 📫 CONTACT
 Visit: https://unknown.biz  
-Email: troy@unknown.biz  
-X: @JumpinBeans
+Email: Jebus@unknown.biz 
+Facebook: https://www.facebook.com/UnknownDevelopments/
+X: https://www.x.com/@XUnknownDevelop
 
 💎 “Everything begins at the Dot Point. There, all truths converge.”
